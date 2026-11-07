@@ -1,0 +1,37 @@
+version: 2
+updates:
+  # npm workspaces share one lockfile at the root; this also covers packages/*.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # TODO: remove once typescript-eslint and @nestjs/cli support TypeScript 7
+      # (typescript-eslint currently requires < 6.1, the Nest CLI pins ~6.0).
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      # TODO: raise together with the Node runtime major (Dockerfile base image and
+      # CI node-version); the Node types should match the runtime, currently Node 24.
+      - dependency-name: "@types/node"
+        versions: [">=25"]
+    groups:
+      # Nest packages must move together (majors included). Dependabot uses the
+      # first matching group, so this has to stay above minor-and-patch.
+      nestjs:
+        patterns:
+          - "@nestjs/*"
+      # One PR for all other minor and patch updates; majors still get their own PR.
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+  # Actions used in .github/workflows/; Dependabot scans that directory from "/".
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      # Action bumps are small and only touch the workflows, so one PR for all of them.
+      github-actions:
+        patterns:
+          - "*"

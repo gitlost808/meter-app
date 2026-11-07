@@ -1,0 +1,1388 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/health": {
+      "get": {
+        "operationId": "HealthController_getHealth",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Health check endpoint",
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/api/units": {
+      "get": {
+        "operationId": "UnitsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List units",
+        "tags": [
+          "units"
+        ]
+      },
+      "post": {
+        "operationId": "UnitsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUnitDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Create a unit",
+        "tags": [
+          "units"
+        ]
+      }
+    },
+    "/api/units/{id}": {
+      "get": {
+        "operationId": "UnitsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get a unit by ID",
+        "tags": [
+          "units"
+        ]
+      },
+      "patch": {
+        "operationId": "UnitsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUnitDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Update a unit",
+        "tags": [
+          "units"
+        ]
+      },
+      "delete": {
+        "operationId": "UnitsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "summary": "Delete a unit",
+        "tags": [
+          "units"
+        ]
+      }
+    },
+    "/api/units/{id}/meter-types": {
+      "get": {
+        "operationId": "UnitsController_findMeterTypes",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "skip",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 0,
+              "type": "number"
+            }
+          },
+          {
+            "name": "take",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 100,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List meter types belonging to a unit",
+        "tags": [
+          "units"
+        ]
+      },
+      "post": {
+        "operationId": "UnitsController_createMeterType",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMeterTypeForUnitDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Create a meter type for a unit",
+        "tags": [
+          "units"
+        ]
+      }
+    },
+    "/api/meter-types": {
+      "get": {
+        "operationId": "MeterTypesController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List meter types",
+        "tags": [
+          "meter-types"
+        ]
+      },
+      "post": {
+        "operationId": "MeterTypesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMeterTypeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Create a meter type",
+        "tags": [
+          "meter-types"
+        ]
+      }
+    },
+    "/api/meter-types/{id}": {
+      "get": {
+        "operationId": "MeterTypesController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get a meter type by ID",
+        "tags": [
+          "meter-types"
+        ]
+      },
+      "patch": {
+        "operationId": "MeterTypesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMeterTypeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Update a meter type",
+        "tags": [
+          "meter-types"
+        ]
+      },
+      "delete": {
+        "operationId": "MeterTypesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "summary": "Delete a meter type",
+        "tags": [
+          "meter-types"
+        ]
+      }
+    },
+    "/api/meter-types/{id}/unit": {
+      "get": {
+        "operationId": "MeterTypesController_findUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get the unit belonging to a meter type",
+        "tags": [
+          "meter-types"
+        ]
+      }
+    },
+    "/api/meter-types/{id}/meters": {
+      "get": {
+        "operationId": "MeterTypesController_findMeters",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "skip",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 0,
+              "type": "number"
+            }
+          },
+          {
+            "name": "take",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 100,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List meters belonging to a meter type",
+        "tags": [
+          "meter-types"
+        ]
+      },
+      "post": {
+        "operationId": "MeterTypesController_createMeter",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMeterForMeterTypeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Create a meter for a meter type",
+        "tags": [
+          "meter-types"
+        ]
+      }
+    },
+    "/api/meter-stats": {
+      "get": {
+        "operationId": "MeterStatsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List meter stats from v_meter_stats",
+        "tags": [
+          "meter-stats"
+        ]
+      }
+    },
+    "/api/meters": {
+      "get": {
+        "operationId": "MetersController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List meters",
+        "tags": [
+          "meters"
+        ]
+      },
+      "post": {
+        "operationId": "MetersController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMeterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Create a meter",
+        "tags": [
+          "meters"
+        ]
+      }
+    },
+    "/api/meters/{id}": {
+      "get": {
+        "operationId": "MetersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get a meter by ID",
+        "tags": [
+          "meters"
+        ]
+      },
+      "patch": {
+        "operationId": "MetersController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMeterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Update a meter",
+        "tags": [
+          "meters"
+        ]
+      },
+      "delete": {
+        "operationId": "MetersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "summary": "Delete a meter",
+        "tags": [
+          "meters"
+        ]
+      }
+    },
+    "/api/meters/{id}/meter-type": {
+      "get": {
+        "operationId": "MetersController_findMeterType",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get the meter type belonging to a meter",
+        "tags": [
+          "meters"
+        ]
+      }
+    },
+    "/api/meters/{id}/values": {
+      "get": {
+        "operationId": "MetersController_findValues",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "skip",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 0,
+              "type": "number"
+            }
+          },
+          {
+            "name": "take",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 100,
+              "type": "number"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-01-01T00:00:00.000Z",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "2026-12-31T23:59:59.999Z",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List values belonging to a meter",
+        "tags": [
+          "meters"
+        ]
+      },
+      "post": {
+        "operationId": "MetersController_createValue",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateValueForMeterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created value"
+          },
+          "409": {
+            "description": "The meter already has a reading on that day (one reading per meter and UTC day)"
+          }
+        },
+        "summary": "Create a value for a meter",
+        "tags": [
+          "meters"
+        ]
+      }
+    },
+    "/api/values": {
+      "get": {
+        "operationId": "ValuesController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List values (latest first)",
+        "tags": [
+          "values"
+        ]
+      },
+      "post": {
+        "operationId": "ValuesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateValueDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created value"
+          },
+          "409": {
+            "description": "The meter already has a reading on that day (one reading per meter and UTC day)"
+          }
+        },
+        "summary": "Create a value",
+        "tags": [
+          "values"
+        ]
+      }
+    },
+    "/api/values/{id}": {
+      "get": {
+        "operationId": "ValuesController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get a value by ID",
+        "tags": [
+          "values"
+        ]
+      },
+      "patch": {
+        "operationId": "ValuesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateValueDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated value"
+          },
+          "409": {
+            "description": "The meter already has a reading on that day (one reading per meter and UTC day)"
+          }
+        },
+        "summary": "Update a value",
+        "tags": [
+          "values"
+        ]
+      },
+      "delete": {
+        "operationId": "ValuesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "summary": "Delete a value",
+        "tags": [
+          "values"
+        ]
+      }
+    },
+    "/api/values/{id}/meter": {
+      "get": {
+        "operationId": "ValuesController_findMeter",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get the meter belonging to a value",
+        "tags": [
+          "values"
+        ]
+      }
+    },
+    "/api/value-entries": {
+      "post": {
+        "operationId": "ValueEntriesController_save",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveValueEntriesDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "All writes were stored"
+          },
+          "409": {
+            "description": "The meter already has a reading on that day (one reading per meter and UTC day); nothing of the request is stored"
+          }
+        },
+        "summary": "Save the values of one day for several meter types and the note of that day in a single transaction",
+        "tags": [
+          "value-entries"
+        ]
+      }
+    },
+    "/api/notes": {
+      "get": {
+        "operationId": "NotesController_findAll",
+        "parameters": [
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "description": "ISO timestamp lower bound",
+            "schema": {
+              "example": "2026-01-01T00:00:00.000Z",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "description": "ISO timestamp upper bound",
+            "schema": {
+              "example": "2026-12-31T23:59:59.999Z",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List notes (supports optional from/to timestamp filtering)",
+        "tags": [
+          "notes"
+        ]
+      },
+      "post": {
+        "operationId": "NotesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNoteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Create a note",
+        "tags": [
+          "notes"
+        ]
+      }
+    },
+    "/api/notes/{id}": {
+      "get": {
+        "operationId": "NotesController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get a note by ID",
+        "tags": [
+          "notes"
+        ]
+      },
+      "patch": {
+        "operationId": "NotesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNoteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Update a note",
+        "tags": [
+          "notes"
+        ]
+      },
+      "delete": {
+        "operationId": "NotesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "summary": "Delete a note",
+        "tags": [
+          "notes"
+        ]
+      }
+    },
+    "/api/reports/{meterTypeId}": {
+      "get": {
+        "operationId": "ReportsController_findByMeterType",
+        "parameters": [
+          {
+            "name": "meterTypeId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "description": "ISO timestamp lower bound",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "description": "ISO timestamp upper bound",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get value report rows for a meter type (from v_value_stats)",
+        "tags": [
+          "reports"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Meter App Service V2",
+    "description": "REST API for meter app",
+    "version": "0.1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "CreateUnitDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Kilowattstunde"
+          },
+          "suffix": {
+            "type": "string",
+            "example": "kWh"
+          }
+        },
+        "required": [
+          "name",
+          "suffix"
+        ]
+      },
+      "CreateMeterTypeForUnitDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Strom"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateUnitDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Kilowattstunde"
+          },
+          "suffix": {
+            "type": "string",
+            "example": "kWh"
+          }
+        }
+      },
+      "CreateMeterTypeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Strom"
+          },
+          "unitId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "name",
+          "unitId"
+        ]
+      },
+      "CreateMeterForMeterTypeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Main electricity meter"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateMeterTypeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Strom"
+          },
+          "unitId": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "CreateMeterDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Main electricity meter"
+          },
+          "meterTypeId": {
+            "type": "number",
+            "example": 2
+          }
+        },
+        "required": [
+          "name",
+          "meterTypeId"
+        ]
+      },
+      "CreateValueForMeterDto": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "example": 1245.67
+          },
+          "timestamp": {
+            "type": "string",
+            "example": "2026-03-05T12:00:00.000Z"
+          }
+        },
+        "required": [
+          "value",
+          "timestamp"
+        ]
+      },
+      "UpdateMeterDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Main electricity meter"
+          },
+          "meterTypeId": {
+            "type": "number",
+            "example": 2
+          }
+        }
+      },
+      "CreateValueDto": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "example": 1245.67
+          },
+          "timestamp": {
+            "type": "string",
+            "example": "2026-03-05T12:00:00.000Z"
+          },
+          "meterId": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "required": [
+          "value",
+          "timestamp",
+          "meterId"
+        ]
+      },
+      "UpdateValueDto": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "example": 1245.67
+          },
+          "timestamp": {
+            "type": "string",
+            "example": "2026-03-05T12:00:00.000Z"
+          },
+          "meterId": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "ValueWriteDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "update",
+              "create"
+            ],
+            "description": "Update a value of the selected day or create a new one"
+          },
+          "valueId": {
+            "type": "number",
+            "example": 12,
+            "description": "Required for kind \"update\""
+          },
+          "meterId": {
+            "type": "number",
+            "example": 3,
+            "description": "Required for kind \"create\""
+          },
+          "value": {
+            "type": "number",
+            "example": 1245.67,
+            "description": "Required for kind \"create\"; for \"update\", an omitted value leaves the stored value unchanged"
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "NewMeterWriteDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "update",
+              "create"
+            ],
+            "description": "Update the first value of an already created new meter, or create the new meter with its first value"
+          },
+          "valueId": {
+            "type": "number",
+            "example": 13,
+            "description": "Required for kind \"update\""
+          },
+          "meterName": {
+            "type": "string",
+            "example": "Electricity 2026-10-16",
+            "description": "Required for kind \"create\""
+          },
+          "value": {
+            "type": "number",
+            "example": 0.5,
+            "description": "Required for kind \"create\"; for \"update\", an omitted value leaves the stored value unchanged"
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "ValueEntryDto": {
+        "type": "object",
+        "properties": {
+          "meterTypeId": {
+            "type": "number",
+            "example": 1
+          },
+          "value": {
+            "$ref": "#/components/schemas/ValueWriteDto"
+          },
+          "newMeter": {
+            "description": "Meter change: replace the meter of this type",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/NewMeterWriteDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "meterTypeId"
+        ]
+      },
+      "NoteWriteDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "create",
+              "update",
+              "delete"
+            ],
+            "description": "Create the note of the entry, or update or delete an existing note of the same day"
+          },
+          "noteId": {
+            "type": "number",
+            "example": 4,
+            "description": "Required for kinds \"update\" and \"delete\""
+          },
+          "text": {
+            "type": "string",
+            "example": "Yearly meter check done",
+            "maxLength": 2000,
+            "description": "Required for kinds \"create\" and \"update\"; ignored for \"delete\""
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "SaveValueEntriesDto": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "example": "2026-10-16T00:00:00.000Z",
+            "description": "Timestamp for all created values and the created note"
+          },
+          "entries": {
+            "description": "May be empty when the request only saves a note",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValueEntryDto"
+            }
+          },
+          "note": {
+            "description": "The note of the entry; saved with the entry timestamp in the same transaction",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/NoteWriteDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "timestamp",
+          "entries"
+        ]
+      },
+      "CreateNoteDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "example": "Yearly meter check done"
+          },
+          "timestamp": {
+            "type": "string",
+            "example": "2026-03-05T12:00:00.000Z"
+          }
+        },
+        "required": [
+          "text",
+          "timestamp"
+        ]
+      },
+      "UpdateNoteDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "example": "Yearly meter check done"
+          },
+          "timestamp": {
+            "type": "string",
+            "example": "2026-03-05T12:00:00.000Z"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.env
+.idea
+docker-compose.override.yml
+node_modules
+
+# Workspace build artifacts
+packages/*/node_modules
+packages/*/dist
+packages/*/.nuxt
+packages/*/.output
+packages/*/.cache
+packages/*/.data
+packages/*/.nitro
+packages/*/*.tsbuildinfo

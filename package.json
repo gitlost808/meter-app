@@ -1,0 +1,59 @@
+{
+  "name": "meter-app",
+  "version": "1.0.0",
+  "description": "MeterApp is a meter data management system with PostgreSQL, a NestJS service, and a Vue + Vite frontend.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint --workspaces --if-present -- --fix",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "docker:up": "bash ./bin/init.sh",
+    "dev:service": "bash -lc 'set -a; source envs/service.local.env; set +a; cd packages/service && npm run start:dev'",
+    "dev:web": "bash -lc 'set -a; source envs/app.local.env; set +a; cd packages/web && npm run dev -- --host 0.0.0.0 --port 5173'",
+    "openapi": "npm run openapi:write --workspace @meter-app/service && npm run generate:types --workspace @meter-app/shared-api"
+  },
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.12.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.11.1",
+    "globals": "^17.13.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.2",
+    "vue-eslint-parser": "^10.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cephra/meter-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cephra/meter-app/issues"
+  },
+  "homepage": "https://github.com/Cephra/meter-app#readme",
+  "workspaces": [
+    "packages/*"
+  ],
+  "overrides": {
+    "@nestjs/platform-fastify": {
+      "fastify": "^5.12.7"
+    },
+    "@nestjs/swagger": {
+      "js-yaml": "^5.4.3"
+    },
+    "openapi-typescript": {
+      "typescript": "$typescript"
+    }
+  }
+}

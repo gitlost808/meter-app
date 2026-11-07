@@ -1,0 +1,57 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Unit {
+  id         Int         @id @default(autoincrement())
+  name       String
+  suffix     String
+  meterTypes MeterType[]
+
+  @@map("t_unit")
+}
+
+model MeterType {
+  id      Int     @id @default(autoincrement())
+  name    String
+  unitId  Int?    @map("unit_id")
+  unit    Unit?   @relation(fields: [unitId], references: [id], onDelete: Cascade, onUpdate: SetNull)
+  meters  Meter[]
+
+  @@map("t_meter_type")
+}
+
+model Meter {
+  id          Int       @id @default(autoincrement())
+  name        String
+  meterTypeId Int?      @map("meter_type_id")
+  meterType   MeterType? @relation(fields: [meterTypeId], references: [id], onDelete: Cascade, onUpdate: SetNull)
+  values      Value[]
+
+  @@map("t_meter")
+}
+
+// One reading per meter and day (UTC): unique index ux_t_value_meter_day on (meter_id, timestamp::date)
+// from docker/db/sql/app/04_unique_value_per_day.sql. Prisma can't express this expression index.
+model Value {
+  id        Int      @id @default(autoincrement())
+  value     Float
+  timestamp DateTime @db.Timestamptz(6)
+  meterId   Int?     @map("meter_id")
+  meter     Meter?   @relation(fields: [meterId], references: [id], onDelete: Cascade, onUpdate: SetNull)
+
+  @@map("t_value")
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  timestamp DateTime @db.Timestamptz(6)
+  text      String
+
+  @@map("t_note")
+}

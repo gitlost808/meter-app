@@ -1,0 +1,8 @@
+/*
+ * Vuetify 4 ships its styles in cascade layers, so Tailwind's preflight is
+ * intentionally omitted: it would override every Vuetify component style it
+ * touches. Utilities are imported unlayered so they keep winning over
+ * Vuetify's layered styles, matching the previous Tailwind 3 behaviour.
+ */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css';

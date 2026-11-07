@@ -1,0 +1,77 @@
+{
+  "realm": "dev",
+  "enabled": true,
+  "roles": {
+    "client": {
+      "app": [
+        {
+          "name": "admin",
+          "description": "Write access to the meter app API"
+        }
+      ]
+    }
+  },
+  "clients": [
+    {
+      "clientId": "app",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "redirectUris": [
+        "http://localhost:5173/auth/callback",
+        "http://localhost:3001/auth/callback"
+      ],
+      "webOrigins": [
+        "http://localhost:5173",
+        "http://localhost:3001"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:5173##http://localhost:3001",
+        "backchannel.logout.session.required": "true"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "dev-writer",
+      "enabled": true,
+      "email": "dev-writer@app.local",
+      "emailVerified": true,
+      "firstName": "Writer",
+      "lastName": "Dev",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "dev-writer",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["default-roles-dev"],
+      "clientRoles": {
+        "app": ["admin"]
+      }
+    },
+    {
+      "username": "dev-reader",
+      "enabled": true,
+      "email": "dev-reader@app.local",
+      "emailVerified": true,
+      "firstName": "Reader",
+      "lastName": "Dev",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "dev-reader",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["default-roles-dev"]
+    }
+  ]
+}

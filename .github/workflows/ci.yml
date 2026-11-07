@@ -1,0 +1,113 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types:
+      - published
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: meter-app
+
+jobs:
+  integration:
+    name: Service integration tests (PostgreSQL)
+    if: github.event_name != 'release'
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: meter_app_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d meter_app_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      # dedicated test database; the integration setup refuses database names without "test"
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/meter_app_test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Generate Prisma client
+        run: npm --workspace=packages/service run prisma:generate
+      - name: Prepare database schema
+        # runs docker/db/sql/app/*.sql (tables, seed data, report views) against the test database
+        run: npm --workspace=packages/service run test:integration:prepare
+      - name: Run integration tests
+        run: npm --workspace=packages/service run test:integration
+
+  push_to_registry:
+    name: Push Docker image to ghcr.io
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - module: web
+          - module: service
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Node.js
+        if: github.event_name != 'release'
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+      - name: Install dependencies
+        if: github.event_name != 'release'
+        run: npm ci
+      - name: Run linter
+        if: github.event_name != 'release'
+        run: npm --workspace=packages/${{matrix.module}} run lint
+      - name: Generate Prisma client
+        # needed for the Prisma types; generate doesn't connect, but prisma.config.ts requires DATABASE_URL
+        if: github.event_name != 'release' && matrix.module == 'service'
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+        run: npm --workspace=packages/service run prisma:generate
+      - name: Run typecheck
+        if: github.event_name != 'release'
+        run: npm --workspace=packages/${{matrix.module}} run typecheck
+      - name: Run tests
+        if: github.event_name != 'release'
+        run: npm --workspace=packages/${{matrix.module}} run test
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v4
+        if: github.event_name != 'pull_request'
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}-${{ matrix.module }}
+      - name: Build and push image to ghcr.io
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          target: ${{ matrix.module }}-runner
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
